@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "474665588849",
+    "firebase_url": "https://keep-track-of-things.firebaseio.com",
+    "project_id": "keep-track-of-things",
+    "storage_bucket": "keep-track-of-things.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474665588849:android:02530c4cbbb841dc",
+        "android_client_info": {
+          "package_name": "things.track.keep.chain.key.app.v.keeptrackofthings"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "474665588849-p8ij60ktvegjqss952066g74odv96vsi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeYo3YpBfmqniRYntyDXoTspnVC5Z-jTM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

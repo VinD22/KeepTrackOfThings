@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Keep Track Of things</string>
+
+    <string name="about_app">This app lets you keep track of items that you have kept / hide in varous places of the house, so in future instead of going over the entire house just search for those things on the app</string>
+
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="slide_1_title">Welcome to Keep Track of things App!</string>
+    <string name="slide_1_desc">@string/about_app</string>
+
+    <string name="slide_2_title">Add Items</string>
+    <string name="slide_2_desc">Whenever you keep an item in your house somewhere, just take the picture of the item and add details where you have kept it.</string>
+
+    <string name="slide_3_title">Searching</string>
+    <string name="slide_3_desc">The app lets you search for Items</string>
+
+    <string name="slide_4_title">Update / Edit anytime </string>
+    <string name="slide_4_desc">Can edit or update and item anytime!</string>
+
+    <string name="see_app_onboaridng">See App On boarding</string>
+    <string name="rate_app">Rate App</string>
+    <string name="share_app">Share App</string>
+    <string name="check_my_other_apps">Check my other apps</string>
+    <string name="settings">Settings</string>
+    <string name="share">Share</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="where_is_it">Where is it?</string>
+    <string name="enter_additional_info">Enter Additional Information</string>
+    <string name="cancel">Cancel</string>
+    <string name="choose_from_library">Choose From Library</string>
+    <string name="select_file">Select File</string>
+    <string name="allow_camera_permission">You Need to Allow Camera Permission</string>
+    <string name="camera_permission_granted">Camera Permission Granted</string>
+
+</resources>
