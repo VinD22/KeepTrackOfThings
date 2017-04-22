@@ -45,6 +45,15 @@
             android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity" />
 
+        <activity android:name=".ViewItem"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity" /> 
+
+        <activity android:name=".EditItem"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:parentActivityName=".MainActivity" />
+
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

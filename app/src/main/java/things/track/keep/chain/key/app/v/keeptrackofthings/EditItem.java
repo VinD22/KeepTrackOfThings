@@ -24,6 +24,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -40,10 +41,10 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 /**
- * Add New Thing!
+ * Edit an Item to its new place!
  */
 
-public class AddThing extends AppCompatActivity {
+public class EditItem extends AppCompatActivity {
 
     private static final int REQUEST_CAPTURE_FROM_CAMERA = 1;
     private static final int SELECT_FILE = 2;
@@ -56,34 +57,101 @@ public class AddThing extends AppCompatActivity {
     Realm realm;
 
     private ImageView mItemImage;
-    private Button mAddItem, mAddPhoto;
+    private ImageButton mDeleteItem;
+    private Button mUpdateItem, mAddPhoto;
     private EditText mName, mWhere, mAdditionalInfo;
 
     File file;
     byte[] imageData;
 
+    int itemId = -1;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_thing);
+        setContentView(R.layout.edit_item);
 
         realm = Realm.getDefaultInstance();
 
         mItemImage = (ImageView) findViewById(R.id.item_image);
+        mDeleteItem = (ImageButton) findViewById(R.id.delete_item);
 
-        mAddItem = (Button) findViewById(R.id.add_item);
+        mUpdateItem = (Button) findViewById(R.id.update_item);
         mAddPhoto = (Button) findViewById(R.id.add_photo);
 
         mName = (EditText) findViewById(R.id.name);
         mWhere = (EditText) findViewById(R.id.where);
         mAdditionalInfo = (EditText) findViewById(R.id.additional_info);
 
-        imageData = "".getBytes();
-
 //        Toast.makeText(this, "Byte array is " + imageData + ".", Toast.LENGTH_SHORT).show();
 //        String s = new String(imageData);
 //        Toast.makeText(this, "Byte to String is " + s + ".", Toast.LENGTH_SHORT).show();
 
+        Bundle extras = getIntent().getExtras();
+        if(extras == null) {
+            Toast.makeText(this, "Error in intents! (Contact Developer)", Toast.LENGTH_SHORT).show();
+        } else {
+            itemId = extras.getInt("id");
+
+            Thing tempThing = realm.where(Thing.class).equalTo("id", itemId).findFirst();
+            realm.beginTransaction();
+
+            mName.setText(tempThing.getName());
+            mWhere.setText(tempThing.getWhere() + "");
+            mAdditionalInfo.setText(tempThing.getAddtionalData() + "");
+            imageData = tempThing.getImage();
+
+            Bitmap bmp = BitmapFactory.decodeByteArray(tempThing.getImage(), 0, tempThing.getImage().length);
+            mItemImage.setImageBitmap(bmp);
+
+            realm.commitTransaction();
+
+        }
+
+
+        mDeleteItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(itemId == -1) {
+                    Toast.makeText(EditItem.this, "Error in Item Id", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    // Deleting Item from database
+
+
+                    new AlertDialog.Builder(EditItem.this, R.style.MyDialogTheme)
+                            .setTitle(R.string.delete_item)
+                            .setMessage(R.string.confirm_delete)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+
+                                    realm.beginTransaction();
+                                    Thing thing = realm.where(Thing.class).equalTo("id", itemId).findFirst();
+                                    thing.deleteFromRealm();
+                                    realm.commitTransaction();
+
+                                    Intent intent = new Intent(EditItem.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+
+                                }
+                            })
+                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                }
+                            })
+                            .show();
+
+
+
+                }
+
+                
+            }
+        });
 
         mAddPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,34 +162,33 @@ public class AddThing extends AppCompatActivity {
             }
         });
 
-        mAddItem.setOnClickListener(new View.OnClickListener() {
+        mUpdateItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-               String name = mName.getText().toString();
-               String where = mWhere.getText().toString();
-               String additionalInfo = mAdditionalInfo.getText().toString();
+                String name = mName.getText().toString();
+                String where = mWhere.getText().toString();
+                String additionalInfo = mAdditionalInfo.getText().toString();
 
-                if(name.isEmpty() || where.isEmpty()) {
-                    Toast.makeText(AddThing.this, R.string.empty_fields, Toast.LENGTH_SHORT).show();
+                if (name.isEmpty() || where.isEmpty()) {
+                    Toast.makeText(EditItem.this, R.string.empty_fields, Toast.LENGTH_SHORT).show();
                 } else {
 
                     // Save in Realm Database!
 
                     realm.beginTransaction();
 
-                    Thing newItem = realm.createObject(Thing.class);
-                    int nextKey = getNextKey();
-                    newItem.setId(nextKey);
-                    newItem.setName(capitalizeFirstLetter(name));
-                    newItem.setWhere(where);
-                    newItem.setImage(imageData);
-                    newItem.setAddtionalData(additionalInfo + "");
+                    Thing editItem = realm.where(Thing.class).equalTo("id", itemId).findFirst();
+                    editItem.setId(itemId);
+                    editItem.setName(capitalizeFirstLetter(name));
+                    editItem.setWhere(where);
+                    editItem.setImage(imageData);
+                    editItem.setAddtionalData(additionalInfo + "");
 
                     realm.commitTransaction();
 
-                    // Toast.makeText(AddThing.this, R.string.product_added, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(AddThing.this, MainActivity.class);
+                    // Toast.makeText(EditItem.this, R.string.product_added, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(EditItem.this, MainActivity.class);
                     startActivity(intent);
                     finish();
 
@@ -140,13 +207,13 @@ public class AddThing extends AppCompatActivity {
         final CharSequence cancelText = getString(R.string.cancel);
         final CharSequence[] items = {takePhotoText, chooseFromLibraryText, cancelText};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddThing.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditItem.this);
         builder.setTitle(R.string.add_photo);
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
 
-                // boolean result = Utility.checkPermission(AddThing.this);
+                // boolean result = Utility.checkPermission(EditItem.this);
                 boolean result = true;
 
 
@@ -174,7 +241,7 @@ public class AddThing extends AppCompatActivity {
 
             boolean cameraPermissiongiven = checkCameraPermission();
 
-            if(cameraPermissiongiven) {
+            if (cameraPermissiongiven) {
                 takePicture();
             } else {
                 requestCameraPermission();
@@ -195,7 +262,7 @@ public class AddThing extends AppCompatActivity {
         // put Uri as extra in intent object
         // intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
 
-        Uri photoURI = FileProvider.getUriForFile(AddThing.this, getApplicationContext().getPackageName() + ".provider", file);
+        Uri photoURI = FileProvider.getUriForFile(EditItem.this, getApplicationContext().getPackageName() + ".provider", file);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
 
         startActivityForResult(intent, REQUEST_CAPTURE_FROM_CAMERA);
@@ -214,7 +281,7 @@ public class AddThing extends AppCompatActivity {
 
             boolean storagePermissionGiven = checkStoragePermission();
 
-            if(storagePermissionGiven) {
+            if (storagePermissionGiven) {
                 selectFile();
             } else {
                 requestStoragePermission();
@@ -246,7 +313,7 @@ public class AddThing extends AppCompatActivity {
 
             //   Toast.makeText(getActivity(), "Called RESULT_ON_ACTIVITY", Toast.LENGTH_SHORT).show();
 
-            ProgressBar progressBar2 = new ProgressBar(AddThing.this, null, android.R.attr.progressBarStyleSmall);
+            ProgressBar progressBar2 = new ProgressBar(EditItem.this, null, android.R.attr.progressBarStyleSmall);
             progressBar2.setVisibility(View.VISIBLE);
 
             Bitmap mBitmap;
@@ -305,7 +372,7 @@ public class AddThing extends AppCompatActivity {
                 }
 
 
-//                String tempPath = getPath(selectedImageUri, AddThing.this);
+//                String tempPath = getPath(selectedImageUri, EditItem.this);
 //                BitmapFactory.Options btmapOptions = new BitmapFactory.Options();
 //                mBitmap = BitmapFactory.decodeFile(tempPath, btmapOptions);
 //
@@ -377,7 +444,7 @@ public class AddThing extends AppCompatActivity {
 
     private void requestCameraPermission() {
 
-        ActivityCompat.requestPermissions(AddThing.this, cameraPermissionArray, CAMERA_PERMISSION_REQUEST_CODE);
+        ActivityCompat.requestPermissions(EditItem.this, cameraPermissionArray, CAMERA_PERMISSION_REQUEST_CODE);
 
     }
 
@@ -390,11 +457,9 @@ public class AddThing extends AppCompatActivity {
 
     private void requestStoragePermission() {
 
-        ActivityCompat.requestPermissions(AddThing.this, storagePermissionArray, STORAGE_PERMISSION_REQUEST_CODE);
+        ActivityCompat.requestPermissions(EditItem.this, storagePermissionArray, STORAGE_PERMISSION_REQUEST_CODE);
 
     }
-
-
 
 
     @Override
@@ -431,7 +496,7 @@ public class AddThing extends AppCompatActivity {
                                 intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                                 Uri uri = Uri.fromParts("package", getPackageName(), null);
                                 intent.setData(uri);
-                                AddThing.this.startActivity(intent);
+                                EditItem.this.startActivity(intent);
 
                             }
                         }
@@ -467,13 +532,13 @@ public class AddThing extends AppCompatActivity {
                                         });
                                 return;
                             } else {
-                                 Toast.makeText(this, R.string.allow_storage_permission, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, R.string.allow_storage_permission, Toast.LENGTH_SHORT).show();
 
                                 Intent intent = new Intent();
                                 intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                                 Uri uri = Uri.fromParts("package", getPackageName(), null);
                                 intent.setData(uri);
-                                AddThing.this.startActivity(intent);
+                                EditItem.this.startActivity(intent);
 
                             }
                         }
@@ -486,7 +551,7 @@ public class AddThing extends AppCompatActivity {
     }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(AddThing.this)
+        new AlertDialog.Builder(EditItem.this)
                 .setMessage(message)
                 .setPositiveButton("OK", okListener)
                 .setNegativeButton("Cancel", null)
@@ -499,14 +564,6 @@ public class AddThing extends AppCompatActivity {
             return original;
         }
         return original.substring(0, 1).toUpperCase() + original.substring(1);
-    }
-
-    public int getNextKey()
-    {
-        try {
-            return realm.where(Thing.class).max("id").intValue() + 1;
-        } catch (ArrayIndexOutOfBoundsException e)
-        { return 0; }
     }
 
 

@@ -4,14 +4,13 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/add_item"
+        android:id="@+id/edit_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimaryDark"
-        android:text="@string/add_item"
-        android:textColor="@color/white"
-        />
+        android:text="@string/edit_item"
+        android:textColor="@color/white" />
 
     <ImageView
         android:id="@+id/item_image"
@@ -21,35 +20,11 @@
         android:padding="20dp"
         android:src="@drawable/ic_camera" />
 
-    <View
-        android:id="@+id/view1"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/item_image"
-        android:background="@color/colorPrimaryDark" />
-
-    <Button
-        android:id="@+id/add_photo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/view1"
-        android:background="@color/colorAccent"
-        android:text="@string/add_photo"
-        android:textStyle="bold"
-        android:textColor="@color/white" />
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/add_photo"
-        android:background="@color/colorPrimaryDark" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/add_item"
-        android:layout_below="@id/view2"
+        android:layout_below="@id/item_image"
         android:layout_marginTop="5dp"
         android:padding="5dp">
 
@@ -58,30 +33,35 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <EditText
+            <TextView
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#6b6969"
                 android:layout_marginTop="5dp"
-                android:hint="@string/enter_name" />
+                android:padding="5dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark" />
 
-            <EditText
+            <TextView
                 android:id="@+id/where"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:backgroundTint="#6b6969"
-                android:hint="@string/where_is_it" />
+                android:padding="5dp"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimary" />
 
-            <EditText
+            <TextView
                 android:id="@+id/additional_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:backgroundTint="#6b6969"
-                android:hint="@string/enter_additional_info" />
-
+                android:padding="5dp"
+                android:textSize="15sp"
+                android:textColor="@color/colorPrimary"
+                />
 
         </LinearLayout>
 

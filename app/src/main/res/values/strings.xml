@@ -37,5 +37,13 @@
     <string name="select_file">Select File</string>
     <string name="allow_camera_permission">You Need to Allow Camera Permission</string>
     <string name="camera_permission_granted">Camera Permission Granted</string>
+    <string name="storage_permission_granted">Storage Permission Granted</string>
+    <string name="allow_storage_permission">Allow Storage Permission</string>
+    <string name="empty_fields">Empty Fields</string>
+    <string name="add_item">Add Item</string>
+    <string name="edit_item">Edit Item</string>
+    <string name="update_item">Update Item</string>
+    <string name="delete_item">Delete Item</string>
+    <string name="confirm_delete">Are you sure you want to delete the item?</string>
 
 </resources>

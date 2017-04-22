@@ -3,15 +3,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/add_item"
+    <LinearLayout
+        android:id="@+id/l1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark"
-        android:text="@string/add_item"
-        android:textColor="@color/white"
-        />
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <ImageButton
+            android:id="@+id/delete_item"
+            android:layout_width="50dp"
+            android:layout_height="48dp"
+            android:padding="5dp"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="1dp"
+            android:layout_marginBottom="1dp"
+            android:background="#88a3be"
+            android:src="@drawable/delete"
+            />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="50dp" />
+
+        <Button
+            android:id="@+id/update_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/update_item"
+            android:textColor="@color/white" />
+
+
+    </LinearLayout>
+
 
     <ImageView
         android:id="@+id/item_image"
@@ -35,8 +62,8 @@
         android:layout_below="@id/view1"
         android:background="@color/colorAccent"
         android:text="@string/add_photo"
-        android:textStyle="bold"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
     <View
         android:id="@+id/view2"
@@ -48,7 +75,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/add_item"
+        android:layout_above="@id/l1"
         android:layout_below="@id/view2"
         android:layout_marginTop="5dp"
         android:padding="5dp">
@@ -62,8 +89,8 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#6b6969"
                 android:layout_marginTop="5dp"
+                android:backgroundTint="#6b6969"
                 android:hint="@string/enter_name" />
 
             <EditText

@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import java.util.List;
 import io.realm.Realm;
 import model.Thing;
 import things.track.keep.chain.key.app.v.keeptrackofthings.R;
+import things.track.keep.chain.key.app.v.keeptrackofthings.ViewItem;
 
 /*
  *  Adapter class to see all the categories + delete categories which are not needed!
@@ -53,10 +55,9 @@ public class ThingsAdapter extends RecyclerView.Adapter<ThingsAdapter.RecyclerVi
             @Override
             public void onClick(View view) {
 
-                // Edit Thing by clicking on the Linear Layout, takes the user to the Edit Thing Page!
-//                Intent intent = new Intent(mContext, ViewThing.class);
-//                intent.putExtra("id", tempThing.getId());
-//                mContext.startActivity(intent);
+                Intent intent = new Intent(mContext, ViewItem.class);
+                intent.putExtra("id", tempThing.getId());
+                mContext.startActivity(intent);
 
             }
         });
@@ -97,14 +98,12 @@ public class ThingsAdapter extends RecyclerView.Adapter<ThingsAdapter.RecyclerVi
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
-        public LinearLayout placeHolder;
         public LinearLayout mLinearLayout;
         protected TextView mThingName;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
             mLinearLayout = (LinearLayout) itemView.findViewById(R.id.lin);
-            placeHolder = (LinearLayout) itemView.findViewById(R.id.mainHolder);
             mThingName = (TextView) itemView.findViewById(R.id.name);
         }
 

@@ -19,8 +19,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:layout_marginTop="5dp"
-        android:padding="5dp"
+        android:layout_marginTop="2dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
         android:layout_below="@id/toolbar"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -31,6 +34,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="bottom|end"
+        android:backgroundTint="#3c95de"
         android:layout_margin="16dp"
         android:elevation="0dp"
         app:srcCompat="@drawable/add" />
