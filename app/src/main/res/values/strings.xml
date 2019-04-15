@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Keep Track Of things</string>
+    <string name="app_name" translatable="false">Keep Track Of things</string>
 
     <string name="about_app">This app lets you keep track of items that you have kept / hide in varous places of the house, so in future instead of going over the entire house just search for those things on the app</string>
 
@@ -10,7 +10,7 @@
     <string name="no">No</string>
 
     <string name="slide_1_title">Welcome to Keep Track of things App!</string>
-    <string name="slide_1_desc">@string/about_app</string>
+    <string name="slide_1_desc">This app lets you keep track of items that you have kept / hide in varous places of the house, so in future instead of going over the entire house just search for those things on the app</string>
 
     <string name="slide_2_title">Add Items</string>
     <string name="slide_2_desc">Whenever you keep an item in your house somewhere, just take the picture of the item and add details where you have kept it.</string>

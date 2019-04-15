@@ -50,7 +50,8 @@ public class AddThing extends AppCompatActivity {
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 100;
     private static final int STORAGE_PERMISSION_REQUEST_CODE = 101;
 
-    String[] cameraPermissionArray = {"android.permission.CAMERA"};
+    //String[] cameraPermissionArray = {"android.permission.CAMERA"};
+    String[] cameraPermissionArray = {"android.permission.CAMERA", READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE};
     String[] storagePermissionArray = {READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE};
 
     Realm realm;

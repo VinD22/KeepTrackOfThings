@@ -1,5 +1,6 @@
 package things.track.keep.chain.key.app.v.keeptrackofthings;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,9 +12,41 @@ import android.widget.TextView;
 
 public class SplashActivity extends AppCompatActivity {
 
+    String url = "";
+    long time  = 2000;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        if(getIntent().getExtras() == null) {
+            // Toast.makeText(this, "Error in intents! (Contact Developer)", Toast.LENGTH_SHORT).show();
+        } else {
+
+            Bundle extras = getIntent().getExtras();
+            url = extras.getString("url");
+            // Toast.makeText(this, "Url : " + url, Toast.LENGTH_SHORT).show();
+
+            if(url != null) {
+
+                if(!url.isEmpty()) {
+
+                    try{
+
+                        time = 1;
+
+                    } catch (ActivityNotFoundException e) {
+
+                    }
+
+
+                } else {
+                    // Run Animation Code!
+                }
+
+            }
+
+        }
 
         TextView mTitle = (TextView) findViewById(R.id.tv);
         LinearLayout mLin = (LinearLayout) findViewById(R.id.lin);
@@ -38,6 +71,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 //Create an intent that will start the main activity.
                 Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+                mainIntent.putExtra("url", url);
                 SplashActivity.this.startActivity(mainIntent);
 
                 //Finish splash activity so user cant go back to it.
@@ -47,7 +81,7 @@ public class SplashActivity extends AppCompatActivity {
                 //Apply splash exit (fade out) and main entry (fade in) animation transitions.
                 // overridePendingTransition(R.anim.mainfadein, R.anim.splashfadeout);
             }
-        }, 2000);
+        }, time);
 
     }
 
